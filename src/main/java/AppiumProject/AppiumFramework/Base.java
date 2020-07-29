@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;		 
@@ -16,16 +17,44 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 
 
 public class Base {
 	
-	static AppiumDriver driver;
+	public static AppiumDriverLocalService service;
 	
+	public AppiumDriverLocalService startServer()
+	{
+		boolean flag = checkIfServerIsRunning(4723);
+		if(!flag)
+		{	
+		service = AppiumDriverLocalService.buildDefaultService();
+		service.start();
+		}
+		return service;
+	}
+	
+	public static boolean checkIfServerIsRunning(int port)
+	{
+		boolean isServerRunning = false;
+		ServerSocket serverSocket;
+		try {
+			serverSocket = new ServerSocket(port);
+			serverSocket.close();
+		} catch(IOException e) {
+			isServerRunning = true;
+		} finally {
+			serverSocket = null;
+		}
+		return isServerRunning;
+	}
 	
 	public static AndroidDriver<AndroidElement> capabilities(String appName) throws IOException {
 		
-	FileInputStream fis = new FileInputStream("C:\\Users\\akhil\\eclipse-workspace\\AppiumFramework\\src\\main\\java\\AppiumProject\\AppiumFramework\\global.properties");
+	System.getProperty("user.dir"); // this gets the path dynamically in whichever system the test is being executed in	
+		
+	FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\AppiumProject\\AppiumFramework\\global.properties");
 	
 	Properties prop = new Properties();	
 	
@@ -58,6 +87,5 @@ public class Base {
 	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	
 	return driver;
-	
 	}	
 	}
