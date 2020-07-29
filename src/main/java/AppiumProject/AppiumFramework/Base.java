@@ -50,9 +50,15 @@ public class Base {
 		return isServerRunning;
 	}
 	
-	public static AndroidDriver<AndroidElement> capabilities(String appName) throws IOException {
+	public static void startEmulator() throws IOException, InterruptedException
+	{
+		Runtime.getRuntime().exec(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\startEmulator.bat");
+		Thread.sleep(6000);
+	}
+	
+	public static AndroidDriver<AndroidElement> capabilities(String appName) throws IOException, InterruptedException {
 		
-	System.getProperty("user.dir"); // this gets the path dynamically in whichever system the test is being executed in	
+	System.getProperty("user.dir"); // this gets the path dynamically in whichever system the test is being executed
 		
 	FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\AppiumProject\\AppiumFramework\\global.properties");
 	
@@ -69,6 +75,12 @@ public class Base {
 	DesiredCapabilities cap = new DesiredCapabilities();
 	
 	String device = (String) prop.get("device");
+	
+	if(device.contains("Emulator"))
+	{
+		startEmulator();
+	}
+	
 	
 	cap.setCapability(MobileCapabilityType.DEVICE_NAME, "APTicksEmulator");
 	

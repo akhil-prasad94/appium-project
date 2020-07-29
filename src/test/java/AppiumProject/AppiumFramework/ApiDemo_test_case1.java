@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -18,10 +19,19 @@ import pageObjects.Preferences;
 
 public class ApiDemo_test_case1 extends Base{
 
+	@BeforeTest
+	public void killAllNodes() throws IOException, InterruptedException
+	{
+		Runtime.getRuntime().exec("taskkill /F /IM node.exe");
+		Thread.sleep(3000);
+	}
+	
 	
 	@Test
-	public  void apiDemos() throws IOException {
+	public  void apiDemos() throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
+		
+	 service = startServer();	
 		
 	 AndroidDriver<AndroidElement> driver = capabilities("apiDemo");
      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -42,16 +52,7 @@ public class ApiDemo_test_case1 extends Base{
      
      p.buttons.get(1).click();
      
-     driver.quit();
-    
-     //driver.findElementByXPath("//android.widget.TextView[@text='Preference']").click();
-//     driver.findElementByXPath("//android.widget.TextView[@text='3. Preference dependencies']").click();
-     
-//     driver.findElementById("android:id/checkbox").click();
-//     driver.findElementByXPath("(//android.widget.RelativeLayout)[2]").click();
-//     driver.findElementByClassName("android.widget.EditText").sendKeys("hello");
-     
-//     driver.findElementsByClassName("android.widget.Button").get(1).click(); 
+     service.stop();
 	}
 
 }
