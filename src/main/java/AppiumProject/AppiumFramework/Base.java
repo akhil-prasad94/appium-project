@@ -7,8 +7,12 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;		 
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.DesiredCapabilities;
 		 
 import io.appium.java_client.AppiumDriver;
@@ -23,6 +27,8 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 public class Base {
 	
 	public static AppiumDriverLocalService service;
+	
+	static AndroidDriver<AndroidElement> driver;
 	
 	public AppiumDriverLocalService startServer()
 	{
@@ -66,8 +72,6 @@ public class Base {
 	
 	prop.load(fis);			
 		
-	AndroidDriver<AndroidElement> driver;
-		
 	File f = new File("src");
 	
 	File fs = new File(f, (String)prop.getProperty(appName));
@@ -80,7 +84,6 @@ public class Base {
 	{
 		startEmulator();
 	}
-	
 	
 	cap.setCapability(MobileCapabilityType.DEVICE_NAME, "APTicksEmulator");
 	
@@ -100,4 +103,10 @@ public class Base {
 	
 	return driver;
 	}	
+	
+	public void getScreenShot(String testname) throws IOException
+	{
+		File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(srcFile, new File(System.getProperty("user.dir")+"\\"+testname+".png"));
+	}
 	}
