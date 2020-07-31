@@ -73,22 +73,7 @@ public class Ecommerce_test_case1 extends Base{
      
      service.stop();
      
-     
-//	//Mobile Gestures
 
-//	WebElement checkbox=driver.findElement(By.className("android.widget.CheckBox"));
-	
-//	TouchAction t=new TouchAction(driver);
-	
-//	t.tap(tapOptions().withElement(element(checkbox))).perform();
-
-//	WebElement tc=driver.findElement(By.xpath("//*[@text='Please read our terms of conditions']"));
-	
-//	t.longPress(longPressOptions().withElement(element(tc)).withDuration(ofSeconds(2))).release().perform();
-	
-//	driver.findElement(By.id("android:id/button1")).click();
-	
-//	driver.findElement(By.id("com.androidsample.generalstore:id/btnProceed")).click();	
 	}
 
 	}
