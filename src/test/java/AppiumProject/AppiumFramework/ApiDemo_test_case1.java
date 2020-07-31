@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -27,8 +28,8 @@ public class ApiDemo_test_case1 extends Base{
 	}
 	
 	
-	@Test
-	public  void apiDemos() throws IOException, InterruptedException {
+	@Test(dataProvider = "InputData", dataProviderClass = TestData.class)
+	public  void apiDemos(String input) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		
 	 service = startServer();	
@@ -48,11 +49,10 @@ public class ApiDemo_test_case1 extends Base{
      
      p.wifisettings.click();
      
-     p.typein.sendKeys("hello gugticks");
+     p.typein.sendKeys(input);
      
      p.buttons.get(1).click();
      
      service.stop();
 	}
-
 }
