@@ -12,6 +12,6 @@ Apk files: 1. General-Store.apk    2. APIDemos.apk
 
 Extent reports are generated after test is run
 
-
+The framework has the following features that can be used to test the application : Report geeneration, Screenshot on test failure
 
 
